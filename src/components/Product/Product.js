@@ -7,6 +7,7 @@ import { useState } from 'react';
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
+  const defaultSize = props.sizes[0].id;
 
   return (
     <article className={styles.product}>
@@ -30,7 +31,7 @@ const Product = (props) => {
                 <li key={size.id}>
                   <button
                     type='button'
-                    // className={clsx(active && styles.active)}
+                    className={clsx(size.id === defaultSize && styles.active)}
                   >
                     {size.name}
                   </button>
