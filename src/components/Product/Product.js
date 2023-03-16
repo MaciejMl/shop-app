@@ -6,13 +6,30 @@ import { useState } from 'react';
 
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
-  const [currentSize, setCurrentSize] = useState(props.sizes[0].id);
-  const [prices, setPrices] = useState(props.sizes);
+  const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
 
   const prepareColorClassName = (color) => {
     return styles[
       'color' + color[0].toUpperCase() + color.substr(1).toLowerCase()
     ];
+  };
+
+  const getPrice = () => {
+    const findPrice = props.sizes.find((item) => item.name === currentSize);
+    return props.basePrice + findPrice.additionalPrice;
+  };
+
+  const summary = () => {
+    console.log(
+      `
+      Summary
+      ===============
+      Name: ${props.title}
+      Price: ${getPrice()}
+      Size: ${currentSize}
+      Color: ${currentColor}
+      `
+    );
   };
 
   return (
@@ -27,18 +44,18 @@ const Product = (props) => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {props.basePrice}$</span>
+          <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel}>Sizes</h3>
             <ul className={styles.choices}>
               {props.sizes.map((size) => (
-                <li key={size.id}>
+                <li key={size.name}>
                   <button
                     type='button'
-                    onClick={() => setCurrentSize(size.id)}
-                    className={clsx(size.id === currentSize && styles.active)}
+                    onClick={() => setCurrentSize(size.name)}
+                    className={clsx(size.name === currentSize && styles.active)}
                   >
                     {size.name}
                   </button>
@@ -63,7 +80,7 @@ const Product = (props) => {
               ))}
             </ul>
           </div>
-          <Button className={styles.button}>
+          <Button className={styles.button} summary={summary}>
             <span className='fa fa-shopping-cart' />
           </Button>
         </form>
