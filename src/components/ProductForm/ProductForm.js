@@ -31,9 +31,9 @@ const ProductForm = (props) => {
             <li key={color}>
               <button
                 type='button'
-                onClick={() => props.setCurrentColor(props.color)}
+                onClick={() => props.setCurrentColor(color)}
                 className={clsx(
-                  props.prepareColorClassName(color),
+                  styles[props.prepareColorClassName(color)],
                   color === props.currentColor && styles.active
                 )}
               />
@@ -46,10 +46,21 @@ const ProductForm = (props) => {
       </Button>
     </form>
   );
-
-  Product.prototypes = {
-    props: PropTypes.func.isRequired,
-  };
+};
+ProductForm.propTypes = {
+  sizes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      additionalPrice: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrentSize: PropTypes.func.isRequired,
+  currentSize: PropTypes.string.isRequired,
+  setCurrentColor: PropTypes.func.isRequired,
+  currentColor: PropTypes.string.isRequired,
+  prepareColorClassName: PropTypes.func.isRequired,
+  summary: PropTypes.func.isRequired,
 };
 
 export default ProductForm;

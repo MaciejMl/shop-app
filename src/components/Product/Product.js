@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductForm from '../ProductForm/ProductForm';
+import HeaderProd from '../HeaderProd/HeaderProd';
 
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
 
   const prepareColorClassName = (color) => {
-    return styles[
-      'color' + color[0].toUpperCase() + color.substr(1).toLowerCase()
-    ];
+    return 'color' + color[0].toUpperCase() + color.substr(1).toLowerCase();
   };
-  console.log('colors', prepareColorClassName);
 
   const getPrice = () => {
     const findPrice = props.sizes.find((item) => item.name === currentSize);
@@ -41,10 +39,7 @@ const Product = (props) => {
         currentColor={currentColor}
       />
       <div>
-        <header>
-          <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {getPrice()}$</span>
-        </header>
+        <HeaderProd title={props.title} getPrice={getPrice} />
         <ProductForm
           sizes={props.sizes}
           setCurrentSize={setCurrentSize}
@@ -60,8 +55,18 @@ const Product = (props) => {
   );
 };
 
-Product.prototypes = {
+Product.protoTypes = {
   props: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  basePrice: PropTypes.number.isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  sizes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      additionalPrice: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Product;
