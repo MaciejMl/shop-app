@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 import HeaderProd from '../HeaderProd/HeaderProd';
+import { useMemo } from 'react';
 
 const Product = (props) => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
@@ -13,10 +14,10 @@ const Product = (props) => {
     return 'color' + color[0].toUpperCase() + color.substr(1).toLowerCase();
   };
 
-  const getPrice = () => {
+  const getPrice = useMemo(() => {
     const findPrice = props.sizes.find((item) => item.name === currentSize);
     return props.basePrice + findPrice.additionalPrice;
-  };
+  }, [currentSize]);
 
   const summary = () => {
     console.log(
@@ -24,7 +25,7 @@ const Product = (props) => {
       Summary
       ===============
       Name: ${props.title}
-      Price: ${getPrice()}
+      Price: ${getPrice}
       Size: ${currentSize}
       Color: ${currentColor}
       `
