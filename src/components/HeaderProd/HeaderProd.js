@@ -1,4 +1,5 @@
 import styles from './HeaderProd.module.scss';
+import PropTypes from 'prop-types';
 
 const HeaderProd = (props) => {
   return (
@@ -9,4 +10,8 @@ const HeaderProd = (props) => {
   );
 };
 
+HeaderProd.propTypes = {
+  getPrice: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
 export default HeaderProd;

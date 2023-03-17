@@ -1,8 +1,8 @@
+import ProductForm from '../ProductForm/ProductForm';
 import styles from './Product.module.scss';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
-import ProductForm from '../ProductForm/ProductForm';
 import HeaderProd from '../HeaderProd/HeaderProd';
 
 const Product = (props) => {
@@ -55,8 +55,7 @@ const Product = (props) => {
   );
 };
 
-Product.protoTypes = {
-  props: PropTypes.func.isRequired,
+Product.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   basePrice: PropTypes.number.isRequired,
